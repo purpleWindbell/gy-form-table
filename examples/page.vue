@@ -42,7 +42,7 @@ import * as api from './api'
 import EditDialog from './dialog'//* 二级页面组件
 // import { pageData } from './mock'
 export default {
-  name: 'AnnualLeave',
+  name: 'Page2',
   components: { EditDialog },
   data() {
     return {
@@ -89,7 +89,7 @@ export default {
             filterSort: 2
           },
           {
-            label: '姓名 ',
+            label: '姓名',
             prop: 'empName',
             filterSort: 1
           },

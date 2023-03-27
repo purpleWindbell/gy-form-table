@@ -504,8 +504,13 @@ export default {
       // this.$store.dispatch('common/setFormFilter', this.formList)
       this.$bus.$emit('filter', { ...this.formList, pageNum: 1 })
     },
+    // 根据当前搜索条件刷新页面
+    refresh() { this.$bus.$emit('filter', { ...this.formList }) },
+    // 获取当前搜索条件
+    getCurrentFilter() { return this.formList },
     // 筛选重置
     handleReset() {
+      this.$emit('queryChange', this.formList)
       // 表单重置
       this.resetForm('formList')
 

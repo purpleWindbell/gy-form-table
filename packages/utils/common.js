@@ -1,6 +1,7 @@
 
 // 引入Decimal yarn add decimal.js 或者 npm install decimal.js --save
 import { Decimal } from 'decimal.js'
+import fileDownload from 'js-file-download'
 
 //  将数字金额转换为大写金额
 export function getChineseNumber(money) {
@@ -206,4 +207,46 @@ export function getFilterList(arr) {
     })
   }
   return filterList
+}
+
+// 调用接口处理数据交互
+/**
+ * @param {*} api : 请求方法
+ * @param {*} params : 请求参数
+ * @param {*} info : 操作按钮的配置项
+ * @param {*} confirm : 是否做二次提示
+ * @param {*} refresh : 刷新列表方法
+ * @param {*} callback : 操作之后的回调
+ * @param {*} type : 操作类型，主要区分导出
+ */
+export function handleConfirmData(data) {
+  let loading = ''
+  const { api, params, info = {}, confirm = false, type, callback } = data
+  if (!confirm) {
+    api(params).then(res => { this.$message.success(res.msg) })
+    return
+  }
+  // 确认弹框的提示信息  // alertAllMsg：弹框的所有提示信息
+  const msg = info.alertAllMsg ? info.alertAllMsg : '确认是否' + info.label
+  this.$confirm(msg, '警告', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    dangerouslyUseHTMLString: true,
+    type: 'warning'
+  }).then(() => {
+    loading = this.$loading({ lock: true, text: `正在${info.label}...`, spinner: 'el-icon-loading', background: 'rgba(0, 0, 0, 0.7)' })
+    api(params).then(res => {
+      if (type == 'export') { fileDownload(res, `${params.filename}.xls`) }
+      this.$message.success(info.label + '成功')
+      if (callback) { callback() }
+    }).catch(() => {
+    }).finally(() => {
+      loading.close()
+    })
+  })
+}
+
+// 导出数据
+export function exportData({ api, info, params = {}}) {
+  this.handleConfirmData({ api, params, confirm: true, info: { ...info }, type: 'export' })
 }

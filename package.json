@@ -10,7 +10,9 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "decimal.js": "^10.4.3",
+    "js-file-download": "^0.4.12",
     "vue": "^2.6.11",
+    "vue-router": "^3.0.2",
     "vue-treeselect": "^1.0.7"
   },
   "files": [

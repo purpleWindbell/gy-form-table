@@ -186,7 +186,7 @@ export default {
       }
     },
     setFilter(filterParams) {
-      this.page.pageNum = filterParams.pageNum ? filterParams.pageNum : 1
+      this.page.pageNum = filterParams.pageNum ? filterParams.pageNum : this.page.pageNum
       this.page.pageSize = filterParams.pageSize ? filterParams.pageSize : 10
       // 筛选条件
       this.filterParams = filterParams

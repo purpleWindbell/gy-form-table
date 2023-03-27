@@ -9,3 +9,14 @@ export function attendCheckRecordPage(data) {
     baseURL: '/ehr-attendance'
   })
 }
+
+// // 导出
+export function exportSummaryAttendRecord(data) {
+  return request({
+    url: '/attendCheckRecord/export',
+    method: 'post',
+    data: data,
+    responseType: 'blob',
+    baseURL: '/ehr-attendance'
+  })
+}
